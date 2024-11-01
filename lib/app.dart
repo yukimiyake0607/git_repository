@@ -6,8 +6,14 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       home: SearchScreen(),
+      theme: ThemeData(
+        textTheme: TextTheme(
+          headlineLarge: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        appBarTheme: AppBarTheme(backgroundColor: Color(0xFFFCFDF6)),
+      ),
     );
   }
 }
