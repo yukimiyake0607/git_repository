@@ -3,4 +3,8 @@
   "cSpell.enabledLanguageIds": [
     "dart",
   ],
+  "cSpell.words": [
+    "ARGB",
+    "LTRB"
+  ],
 }
