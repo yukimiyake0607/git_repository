@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:git_repository/models/searchRepository/search_repository.dart';
 import 'package:git_repository/ui/widgets/textfield_search.dart';
+import 'package:go_router/go_router.dart';
 
 class SearchScreen extends StatelessWidget {
   SearchScreen({super.key});
@@ -87,7 +88,7 @@ class SearchScreen extends StatelessWidget {
                         ),
                         trailing: Icon(Icons.chevron_right),
                         onTap: () {
-                          // DetailScreenに遷移
+                          context.goNamed('detail');
                         },
                       ),
                       Divider(color: const Color.fromARGB(255, 228, 226, 226)),
