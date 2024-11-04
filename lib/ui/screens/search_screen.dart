@@ -90,7 +90,7 @@ class SearchScreen extends StatelessWidget {
                         ),
                         trailing: Icon(Icons.chevron_right),
                         onTap: () {
-                          context.goNamed('detail');
+                          context.push('/detail');
                         },
                       ),
                       Divider(color: const Color.fromARGB(255, 228, 226, 226)),
