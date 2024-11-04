@@ -1,4 +1,4 @@
-import 'package:git_repository/ui/screens/detail_screen.dart';
+import 'package:git_repository/ui/screens/repository_detail_screen.dart';
 import 'package:git_repository/ui/screens/search_screen.dart';
 import 'package:go_router/go_router.dart';
 
@@ -13,7 +13,7 @@ final router = GoRouter(
     GoRoute(
       path: '/detail',
       name: 'detail',
-      builder: (context, state) => DetailScreen(),
+      builder: (context, state) => RepositoryDetailScreen(),
     ),
   ],
 );
