@@ -17,6 +17,7 @@ class MainApp extends StatelessWidget {
             color: Colors.black,
           ),
         ),
+        scaffoldBackgroundColor: Color(0xFFFCFDF6),
       ),
     );
   }
