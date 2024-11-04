@@ -6,6 +6,8 @@ import 'package:go_router/go_router.dart';
 class SearchScreen extends StatelessWidget {
   SearchScreen({super.key});
 
+  static const _titleTextstyle = TextStyle(fontSize: 30);
+
   final List<SearchRepository> searchRepositories = [
     SearchRepository(
         name: 'flutter',
@@ -37,7 +39,7 @@ class SearchScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           'GitHub',
-          style: Theme.of(context).textTheme.headlineLarge,
+          style: _titleTextstyle,
         ),
       ),
       body: Padding(

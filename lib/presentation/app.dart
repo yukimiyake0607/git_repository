@@ -9,10 +9,14 @@ class MainApp extends StatelessWidget {
     return MaterialApp.router(
       routerConfig: router,
       theme: ThemeData(
-        textTheme: TextTheme(
-          headlineLarge: TextStyle(fontWeight: FontWeight.bold),
+        appBarTheme: AppBarTheme(
+          backgroundColor: Color(0xFFFCFDF6),
+          titleTextStyle: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: Colors.black,
+          ),
         ),
-        appBarTheme: AppBarTheme(backgroundColor: Color(0xFFFCFDF6)),
       ),
     );
   }
