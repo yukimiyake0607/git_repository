@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:git_repository/models/searchRepository/search_repository.dart';
 import 'package:git_repository/ui/widgets/textfield_search.dart';
+import 'package:git_repository/util/util.dart';
 import 'package:go_router/go_router.dart';
 
 class SearchScreen extends StatelessWidget {
@@ -47,7 +48,7 @@ class SearchScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             TextfieldSearch(),
-            Divider(color: const Color.fromARGB(255, 228, 226, 226)),
+            Divider(color: dividerColor),
             Text('Total ******'),
             Expanded(
               child: ListView.builder(
@@ -62,8 +63,7 @@ class SearchScreen extends StatelessWidget {
                         ),
                         title: Text(
                           repo.name,
-                          style: TextStyle(
-                              fontWeight: FontWeight.w600, fontSize: 20),
+                          style: repositoryTitleTextStyle,
                         ),
                         subtitle: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -92,7 +92,7 @@ class SearchScreen extends StatelessWidget {
                           context.push('/detail');
                         },
                       ),
-                      Divider(color: const Color.fromARGB(255, 228, 226, 226)),
+                      Divider(color: dividerColor),
                     ],
                   );
                 },
