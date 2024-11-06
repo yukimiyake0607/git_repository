@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:git_repository/util/util.dart';
+import 'package:git_repository/core/util/util.dart';
 
 class DetailRepositoryItem extends StatelessWidget {
   const DetailRepositoryItem({

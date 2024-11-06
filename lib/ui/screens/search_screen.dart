@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:git_repository/models/searchRepository/search_repository.dart';
 import 'package:git_repository/ui/widgets/textfield_search.dart';
-import 'package:git_repository/util/util.dart';
+import 'package:git_repository/core/util/util.dart';
 import 'package:go_router/go_router.dart';
 
 class SearchScreen extends StatelessWidget {

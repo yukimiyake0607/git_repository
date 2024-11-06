@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:git_repository/models/detailRepository/detail_repository.dart';
 import 'package:git_repository/ui/widgets/detail_repository_item.dart';
-import 'package:git_repository/util/util.dart';
+import 'package:git_repository/core/util/util.dart';
 import 'package:go_router/go_router.dart';
 
 class RepositoryDetailScreen extends StatelessWidget {
