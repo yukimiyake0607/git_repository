@@ -8,11 +8,11 @@ part of 'repository_item.dart';
 
 _$RepositoryItemImpl _$$RepositoryItemImplFromJson(Map<String, dynamic> json) =>
     _$RepositoryItemImpl(
-      name: json['name'] as String,
-      avatarUrl: json['avatarUrl'] as String,
-      language: json['language'] as String,
-      description: json['description'] as String,
-      stargazersCount: (json['stargazersCount'] as num).toInt(),
+      name: json['name'] as String?,
+      avatarUrl: json['avatarUrl'] as String?,
+      language: json['language'] as String?,
+      description: json['description'] as String?,
+      stargazersCount: (json['stargazersCount'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$$RepositoryItemImplToJson(

@@ -20,11 +20,11 @@ RepositoryItem _$RepositoryItemFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$RepositoryItem {
-  String get name => throw _privateConstructorUsedError;
-  String get avatarUrl => throw _privateConstructorUsedError;
-  String get language => throw _privateConstructorUsedError;
-  String get description => throw _privateConstructorUsedError;
-  int get stargazersCount => throw _privateConstructorUsedError;
+  String? get name => throw _privateConstructorUsedError;
+  String? get avatarUrl => throw _privateConstructorUsedError;
+  String? get language => throw _privateConstructorUsedError;
+  String? get description => throw _privateConstructorUsedError;
+  int? get stargazersCount => throw _privateConstructorUsedError;
 
   /// Serializes this RepositoryItem to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -43,11 +43,11 @@ abstract class $RepositoryItemCopyWith<$Res> {
       _$RepositoryItemCopyWithImpl<$Res, RepositoryItem>;
   @useResult
   $Res call(
-      {String name,
-      String avatarUrl,
-      String language,
-      String description,
-      int stargazersCount});
+      {String? name,
+      String? avatarUrl,
+      String? language,
+      String? description,
+      int? stargazersCount});
 }
 
 /// @nodoc
@@ -65,33 +65,33 @@ class _$RepositoryItemCopyWithImpl<$Res, $Val extends RepositoryItem>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? name = null,
-    Object? avatarUrl = null,
-    Object? language = null,
-    Object? description = null,
-    Object? stargazersCount = null,
+    Object? name = freezed,
+    Object? avatarUrl = freezed,
+    Object? language = freezed,
+    Object? description = freezed,
+    Object? stargazersCount = freezed,
   }) {
     return _then(_value.copyWith(
-      name: null == name
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      avatarUrl: null == avatarUrl
+              as String?,
+      avatarUrl: freezed == avatarUrl
           ? _value.avatarUrl
           : avatarUrl // ignore: cast_nullable_to_non_nullable
-              as String,
-      language: null == language
+              as String?,
+      language: freezed == language
           ? _value.language
           : language // ignore: cast_nullable_to_non_nullable
-              as String,
-      description: null == description
+              as String?,
+      description: freezed == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
-              as String,
-      stargazersCount: null == stargazersCount
+              as String?,
+      stargazersCount: freezed == stargazersCount
           ? _value.stargazersCount
           : stargazersCount // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
     ) as $Val);
   }
 }
@@ -105,11 +105,11 @@ abstract class _$$RepositoryItemImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String name,
-      String avatarUrl,
-      String language,
-      String description,
-      int stargazersCount});
+      {String? name,
+      String? avatarUrl,
+      String? language,
+      String? description,
+      int? stargazersCount});
 }
 
 /// @nodoc
@@ -125,33 +125,33 @@ class __$$RepositoryItemImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? name = null,
-    Object? avatarUrl = null,
-    Object? language = null,
-    Object? description = null,
-    Object? stargazersCount = null,
+    Object? name = freezed,
+    Object? avatarUrl = freezed,
+    Object? language = freezed,
+    Object? description = freezed,
+    Object? stargazersCount = freezed,
   }) {
     return _then(_$RepositoryItemImpl(
-      name: null == name
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      avatarUrl: null == avatarUrl
+              as String?,
+      avatarUrl: freezed == avatarUrl
           ? _value.avatarUrl
           : avatarUrl // ignore: cast_nullable_to_non_nullable
-              as String,
-      language: null == language
+              as String?,
+      language: freezed == language
           ? _value.language
           : language // ignore: cast_nullable_to_non_nullable
-              as String,
-      description: null == description
+              as String?,
+      description: freezed == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
-              as String,
-      stargazersCount: null == stargazersCount
+              as String?,
+      stargazersCount: freezed == stargazersCount
           ? _value.stargazersCount
           : stargazersCount // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
     ));
   }
 }
@@ -170,15 +170,15 @@ class _$RepositoryItemImpl implements _RepositoryItem {
       _$$RepositoryItemImplFromJson(json);
 
   @override
-  final String name;
+  final String? name;
   @override
-  final String avatarUrl;
+  final String? avatarUrl;
   @override
-  final String language;
+  final String? language;
   @override
-  final String description;
+  final String? description;
   @override
-  final int stargazersCount;
+  final int? stargazersCount;
 
   @override
   String toString() {
@@ -225,25 +225,25 @@ class _$RepositoryItemImpl implements _RepositoryItem {
 
 abstract class _RepositoryItem implements RepositoryItem {
   const factory _RepositoryItem(
-      {required final String name,
-      required final String avatarUrl,
-      required final String language,
-      required final String description,
-      required final int stargazersCount}) = _$RepositoryItemImpl;
+      {required final String? name,
+      required final String? avatarUrl,
+      required final String? language,
+      required final String? description,
+      required final int? stargazersCount}) = _$RepositoryItemImpl;
 
   factory _RepositoryItem.fromJson(Map<String, dynamic> json) =
       _$RepositoryItemImpl.fromJson;
 
   @override
-  String get name;
+  String? get name;
   @override
-  String get avatarUrl;
+  String? get avatarUrl;
   @override
-  String get language;
+  String? get language;
   @override
-  String get description;
+  String? get description;
   @override
-  int get stargazersCount;
+  int? get stargazersCount;
 
   /// Create a copy of RepositoryItem
   /// with the given fields replaced by the non-null parameter values.
