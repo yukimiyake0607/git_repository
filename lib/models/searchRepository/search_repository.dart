@@ -7,7 +7,7 @@ part 'search_repository.g.dart';
 @freezed
 class SearchRepository with _$SearchRepository {
   const factory SearchRepository({
-    required int totalCount,
+    required int? totalCount,
     required List<RepositoryItem> items,
   }) = _SearchRepository;
 

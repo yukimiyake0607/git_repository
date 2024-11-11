@@ -9,7 +9,7 @@ part of 'search_repository.dart';
 _$SearchRepositoryImpl _$$SearchRepositoryImplFromJson(
         Map<String, dynamic> json) =>
     _$SearchRepositoryImpl(
-      totalCount: (json['totalCount'] as num).toInt(),
+      totalCount: (json['totalCount'] as num?)?.toInt(),
       items: (json['items'] as List<dynamic>)
           .map((e) => RepositoryItem.fromJson(e as Map<String, dynamic>))
           .toList(),

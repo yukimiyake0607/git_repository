@@ -20,7 +20,7 @@ SearchRepository _$SearchRepositoryFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$SearchRepository {
-  int get totalCount => throw _privateConstructorUsedError;
+  int? get totalCount => throw _privateConstructorUsedError;
   List<RepositoryItem> get items => throw _privateConstructorUsedError;
 
   /// Serializes this SearchRepository to a JSON map.
@@ -39,7 +39,7 @@ abstract class $SearchRepositoryCopyWith<$Res> {
           SearchRepository value, $Res Function(SearchRepository) then) =
       _$SearchRepositoryCopyWithImpl<$Res, SearchRepository>;
   @useResult
-  $Res call({int totalCount, List<RepositoryItem> items});
+  $Res call({int? totalCount, List<RepositoryItem> items});
 }
 
 /// @nodoc
@@ -57,14 +57,14 @@ class _$SearchRepositoryCopyWithImpl<$Res, $Val extends SearchRepository>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? totalCount = null,
+    Object? totalCount = freezed,
     Object? items = null,
   }) {
     return _then(_value.copyWith(
-      totalCount: null == totalCount
+      totalCount: freezed == totalCount
           ? _value.totalCount
           : totalCount // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       items: null == items
           ? _value.items
           : items // ignore: cast_nullable_to_non_nullable
@@ -81,7 +81,7 @@ abstract class _$$SearchRepositoryImplCopyWith<$Res>
       __$$SearchRepositoryImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int totalCount, List<RepositoryItem> items});
+  $Res call({int? totalCount, List<RepositoryItem> items});
 }
 
 /// @nodoc
@@ -97,14 +97,14 @@ class __$$SearchRepositoryImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? totalCount = null,
+    Object? totalCount = freezed,
     Object? items = null,
   }) {
     return _then(_$SearchRepositoryImpl(
-      totalCount: null == totalCount
+      totalCount: freezed == totalCount
           ? _value.totalCount
           : totalCount // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       items: null == items
           ? _value._items
           : items // ignore: cast_nullable_to_non_nullable
@@ -124,7 +124,7 @@ class _$SearchRepositoryImpl implements _SearchRepository {
       _$$SearchRepositoryImplFromJson(json);
 
   @override
-  final int totalCount;
+  final int? totalCount;
   final List<RepositoryItem> _items;
   @override
   List<RepositoryItem> get items {
@@ -172,14 +172,14 @@ class _$SearchRepositoryImpl implements _SearchRepository {
 
 abstract class _SearchRepository implements SearchRepository {
   const factory _SearchRepository(
-      {required final int totalCount,
+      {required final int? totalCount,
       required final List<RepositoryItem> items}) = _$SearchRepositoryImpl;
 
   factory _SearchRepository.fromJson(Map<String, dynamic> json) =
       _$SearchRepositoryImpl.fromJson;
 
   @override
-  int get totalCount;
+  int? get totalCount;
   @override
   List<RepositoryItem> get items;
 
