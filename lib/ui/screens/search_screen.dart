@@ -25,7 +25,18 @@ class SearchScreen extends ConsumerWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            TextfieldSearch(),
+            Row(
+              children: [
+                Expanded(child: TextfieldSearch()),
+                IconButton(
+                    onPressed: () {},
+                    icon: Icon(
+                      Icons.search,
+                      color: Colors.black54,
+                      size: 28,
+                    )),
+              ],
+            ),
             Divider(color: dividerColor),
             searchRepositoryAsync.when(
               data: (result) {
