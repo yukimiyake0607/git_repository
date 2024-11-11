@@ -29,84 +29,98 @@ class SearchScreen extends ConsumerWidget {
               children: [
                 Expanded(child: TextfieldSearch()),
                 IconButton(
-                    onPressed: () {},
-                    icon: Icon(
-                      Icons.search,
-                      color: Colors.black54,
-                      size: 28,
-                    )),
+                  onPressed: () {
+                    ref
+                        .read(searchRepositoryListProvider.notifier)
+                        .fetchRepository('flutter', 1);
+                  },
+                  icon: Icon(
+                    Icons.search,
+                    color: Colors.black54,
+                    size: 28,
+                  ),
+                ),
               ],
-            ),
-            Divider(color: dividerColor),
-            searchRepositoryAsync.when(
-              data: (result) {
-                return result.when(success: (searchRepository) {
-                  return Text('${searchRepository.totalCount}件');
-                }, exception: (repositoryException) {
-                  return Text('--');
-                });
-              },
-              error: (_, __) => const SizedBox.shrink(),
-              loading: () => const SizedBox.shrink(),
             ),
             Expanded(
               child: searchRepositoryAsync.when(
                 data: (result) {
                   return result.when(
                     success: (searchRepository) {
-                      return searchRepository.totalCount == 0
-                          ? Center(
-                              child: Text('検索結果はありません'),
-                            )
-                          : ListView.builder(
-                              itemCount: searchRepository.totalCount,
-                              itemBuilder: (BuildContext context, int index) {
-                                final repo = searchRepository.items[index];
-                                return Column(
-                                  children: [
-                                    ListTile(
-                                      leading: CircleAvatar(
-                                        backgroundImage:
-                                            NetworkImage(repo.avatarUrl),
-                                      ),
-                                      title: Text(
-                                        repo.name,
-                                        style: repositoryTitleTextStyle,
-                                      ),
-                                      subtitle: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                      return CustomScrollView(
+                        slivers: [
+                          SliverToBoxAdapter(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Divider(color: dividerColor),
+                                Text('${searchRepository.items.length}件'),
+                              ],
+                            ),
+                          ),
+                          searchRepository.totalCount == 0
+                              ? SliverFillRemaining(
+                                  child: Center(
+                                    child: Text('検索結果はありません'),
+                                  ),
+                                )
+                              : SliverList(
+                                  delegate: SliverChildBuilderDelegate(
+                                    (context, index) {
+                                      final repo =
+                                          searchRepository.items[index];
+                                      return Column(
                                         children: [
-                                          Text(repo.description),
-                                          SizedBox(height: 5),
-                                          Row(
-                                            children: [
-                                              Icon(
-                                                Icons.language,
-                                                color: Colors.blue,
+                                          ListTile(
+                                            leading: CircleAvatar(
+                                              backgroundImage: NetworkImage(
+                                                repo.avatarUrl ??
+                                                    'https://github.com/identicons/default.png',
                                               ),
-                                              Text(repo.language),
-                                              SizedBox(width: 10),
-                                              Icon(
-                                                Icons.stars_rounded,
-                                                color: Colors.lightGreen,
-                                              ),
-                                              Text(repo.stargazersCount
-                                                  .toString()),
-                                            ],
+                                            ),
+                                            title: Text(
+                                              repo.name!,
+                                              style: repositoryTitleTextStyle,
+                                            ),
+                                            subtitle: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(repo.description ?? ''),
+                                                const SizedBox(height: 5),
+                                                Row(
+                                                  children: [
+                                                    const Icon(
+                                                      Icons.language,
+                                                      color: Colors.blue,
+                                                    ),
+                                                    Text(repo.language ?? '-'),
+                                                    const SizedBox(width: 10),
+                                                    const Icon(
+                                                      Icons.stars_rounded,
+                                                      color: Colors.lightGreen,
+                                                    ),
+                                                    Text(repo.stargazersCount
+                                                        .toString()),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                            trailing:
+                                                const Icon(Icons.chevron_right),
+                                            onTap: () {
+                                              context.push('/detail');
+                                            },
                                           ),
+                                          Divider(color: dividerColor),
                                         ],
-                                      ),
-                                      trailing: Icon(Icons.chevron_right),
-                                      onTap: () {
-                                        context.push('/detail');
-                                      },
-                                    ),
-                                    Divider(color: dividerColor),
-                                  ],
-                                );
-                              },
-                            );
+                                      );
+                                    },
+                                    childCount: searchRepository.items.length,
+                                  ),
+                                ),
+                        ],
+                      );
                     },
                     exception: (repositoryException) {
                       return Text(repositoryException.message);
