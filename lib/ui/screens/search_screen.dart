@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:git_repository/data/search_repository_list/search_repository_list.dart';
+import 'package:git_repository/data/provider/search_repository_list.dart';
 import 'package:git_repository/ui/widgets/textfield_search.dart';
 import 'package:git_repository/core/util/util.dart';
 import 'package:go_router/go_router.dart';
