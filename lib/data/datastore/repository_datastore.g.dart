@@ -7,7 +7,7 @@ part of 'repository_datastore.dart';
 // **************************************************************************
 
 String _$repositoryDatastoreHash() =>
-    r'030adb399938defd45ffd1580b6664c1b8bf62fb';
+    r'946402b059b5793078ddfc2d5f3367af320b7bb8';
 
 /// See also [repositoryDatastore].
 @ProviderFor(repositoryDatastore)
