@@ -11,8 +11,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class SearchScreen extends ConsumerWidget {
   const SearchScreen({super.key});
 
-  static const _titleTextstyle = TextStyle(fontSize: 30);
-
   void _showDialog(BuildContext context) {
     showDialog<void>(
       context: context,
@@ -55,7 +53,7 @@ class SearchScreen extends ConsumerWidget {
       appBar: AppBar(
         title: Text(
           'GitHub',
-          style: _titleTextstyle,
+          style: titleTextstyle,
         ),
       ),
       body: Padding(

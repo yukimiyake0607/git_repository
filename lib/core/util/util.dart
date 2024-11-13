@@ -12,3 +12,5 @@ const TextStyle repositoryInfoItem = TextStyle(
 );
 
 const Color searchItemColor = Color(0xFFE1EEDF);
+
+const titleTextstyle = TextStyle(fontSize: 30);
