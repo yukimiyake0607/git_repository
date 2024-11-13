@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:git_repository/core/result/result.dart';
-import 'package:git_repository/data/provider/search_repository_list.dart';
+import 'package:git_repository/data/search_ewpository_list/search_repository_list.dart';
 import 'package:git_repository/models/repository_exception/repository_exception.dart';
 import 'package:git_repository/models/searchRepository/search_repository.dart';
 import 'package:git_repository/ui/widgets/textfield_search.dart';
