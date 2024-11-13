@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:git_repository/core/result/result.dart';
 import 'package:git_repository/data/provider/search_repository_list.dart';
+import 'package:git_repository/models/repository_exception/repository_exception.dart';
+import 'package:git_repository/models/searchRepository/search_repository.dart';
 import 'package:git_repository/ui/widgets/textfield_search.dart';
 import 'package:git_repository/core/util/util.dart';
 import 'package:go_router/go_router.dart';
@@ -10,9 +13,44 @@ class SearchScreen extends ConsumerWidget {
 
   static const _titleTextstyle = TextStyle(fontSize: 30);
 
+  void _showDialog(BuildContext context) {
+    showDialog<void>(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('エラー'),
+          content: const Text('予期せぬエラーが発生しました'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                context.pop();
+              },
+              child: Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // プロバイダを監視
     final searchRepositoryAsync = ref.watch(searchRepositoryListProvider);
+
+    // プロバイダを購読
+    // stateでAsyncErrorが発生した場合に処理が実行
+    ref.listen<AsyncValue<Result<SearchRepository, RepositoryException>>>(
+      searchRepositoryListProvider,
+      (_, current) {
+        current.whenOrNull(
+          error: (error, stackTrace) {
+            _showDialog(context);
+          },
+        );
+      },
+    );
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -127,7 +165,7 @@ class SearchScreen extends ConsumerWidget {
                     },
                   );
                 },
-                error: (error, stackTrace) => CircularProgressIndicator(),
+                error: (_, __) => Center(child: Text('検索結果はありません')),
                 loading: () => CircularProgressIndicator(),
               ),
             ),
