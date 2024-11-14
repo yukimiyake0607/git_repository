@@ -27,4 +27,11 @@ class SearchRepositoryList extends _$SearchRepositoryList {
       state = AsyncError(e, stack);
     }
   }
+
+  Future<void> clearRepository() async {
+    state = const AsyncValue.loading();
+
+    state = AsyncValue.data(
+        Result.success(SearchRepository(totalCount: 0, items: [])));
+  }
 }
