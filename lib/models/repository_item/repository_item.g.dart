@@ -9,18 +9,18 @@ part of 'repository_item.dart';
 _$RepositoryItemImpl _$$RepositoryItemImplFromJson(Map<String, dynamic> json) =>
     _$RepositoryItemImpl(
       name: json['name'] as String?,
-      avatarUrl: json['avatarUrl'] as String?,
+      avatarUrl: json['avatar_url'] as String?,
       language: json['language'] as String?,
       description: json['description'] as String?,
-      stargazersCount: (json['stargazersCount'] as num?)?.toInt(),
+      stargazersCount: (json['stargazers_count'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$$RepositoryItemImplToJson(
         _$RepositoryItemImpl instance) =>
     <String, dynamic>{
       'name': instance.name,
-      'avatarUrl': instance.avatarUrl,
+      'avatar_url': instance.avatarUrl,
       'language': instance.language,
       'description': instance.description,
-      'stargazersCount': instance.stargazersCount,
+      'stargazers_count': instance.stargazersCount,
     };
