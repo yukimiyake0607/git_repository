@@ -3,6 +3,7 @@ import 'package:git_repository/core/result/result.dart';
 import 'package:git_repository/data/search_repository_list/search_repository_list.dart';
 import 'package:git_repository/models/repository_exception/repository_exception.dart';
 import 'package:git_repository/models/searchRepository/search_repository.dart';
+import 'package:git_repository/ui/widgets/result_empty.dart';
 import 'package:git_repository/ui/widgets/textfield_search.dart';
 import 'package:git_repository/core/util/util.dart';
 import 'package:go_router/go_router.dart';
@@ -94,12 +95,8 @@ class SearchScreen extends ConsumerWidget {
                               ],
                             ),
                           ),
-                          searchRepository.totalCount == 0
-                              ? SliverFillRemaining(
-                                  child: Center(
-                                    child: Text('検索結果はありません'),
-                                  ),
-                                )
+                          searchRepository.items.isEmpty
+                              ? SliverFillRemaining(child: ResultEmptyScreen())
                               : SliverList(
                                   delegate: SliverChildBuilderDelegate(
                                     (context, index) {
