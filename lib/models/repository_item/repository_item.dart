@@ -7,11 +7,21 @@ part 'repository_item.g.dart';
 class RepositoryItem with _$RepositoryItem {
   const factory RepositoryItem({
     required String? name,
-    required String? avatarUrl,
+    required Owner? owner,
     required String? language,
     required String? description,
     required int? stargazersCount,
   }) = _RepositoryItem;
   
   factory RepositoryItem.fromJson(Map<String, dynamic> json) => _$RepositoryItemFromJson(json);
+}
+
+
+@freezed
+class Owner with _$Owner {
+  const factory Owner({
+    required String? avatarUrl,
+  }) = _Owner;
+  
+  factory Owner.fromJson(Map<String, dynamic> json) => _$OwnerFromJson(json);
 }

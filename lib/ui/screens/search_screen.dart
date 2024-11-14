@@ -79,7 +79,7 @@ class SearchScreen extends ConsumerWidget {
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
                                 Divider(color: dividerColor),
-                                Text('${searchRepository.items.length}件'),
+                                Text('${searchRepository.totalCount}件'),
                               ],
                             ),
                           ),
@@ -95,7 +95,7 @@ class SearchScreen extends ConsumerWidget {
                                           ListTile(
                                             leading: CircleAvatar(
                                               backgroundImage: NetworkImage(
-                                                repo.avatarUrl ??
+                                                repo.owner!.avatarUrl ??
                                                     'https://github.com/identicons/default.png',
                                               ),
                                             ),
