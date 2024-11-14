@@ -65,18 +65,6 @@ class SearchScreen extends ConsumerWidget {
             Row(
               children: [
                 Expanded(child: TextfieldSearch()),
-                IconButton(
-                  onPressed: () {
-                    ref
-                        .read(searchRepositoryListProvider.notifier)
-                        .fetchRepository('flutter', 1);
-                  },
-                  icon: Icon(
-                    Icons.search,
-                    color: Colors.black54,
-                    size: 28,
-                  ),
-                ),
               ],
             ),
             Expanded(
@@ -161,7 +149,7 @@ class SearchScreen extends ConsumerWidget {
                   );
                 },
                 error: (_, __) => Center(child: Text('検索結果はありません')),
-                loading: () => CircularProgressIndicator(),
+                loading: () => Center(child: CircularProgressIndicator()),
               ),
             ),
           ],
