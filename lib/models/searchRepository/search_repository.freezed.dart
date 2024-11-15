@@ -20,11 +20,8 @@ SearchRepository _$SearchRepositoryFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$SearchRepository {
-  String get name => throw _privateConstructorUsedError;
-  String get avatarUrl => throw _privateConstructorUsedError;
-  String get language => throw _privateConstructorUsedError;
-  String get description => throw _privateConstructorUsedError;
-  int get stargazersCount => throw _privateConstructorUsedError;
+  int? get totalCount => throw _privateConstructorUsedError;
+  List<RepositoryItem> get items => throw _privateConstructorUsedError;
 
   /// Serializes this SearchRepository to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -42,12 +39,7 @@ abstract class $SearchRepositoryCopyWith<$Res> {
           SearchRepository value, $Res Function(SearchRepository) then) =
       _$SearchRepositoryCopyWithImpl<$Res, SearchRepository>;
   @useResult
-  $Res call(
-      {String name,
-      String avatarUrl,
-      String language,
-      String description,
-      int stargazersCount});
+  $Res call({int? totalCount, List<RepositoryItem> items});
 }
 
 /// @nodoc
@@ -65,33 +57,18 @@ class _$SearchRepositoryCopyWithImpl<$Res, $Val extends SearchRepository>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? name = null,
-    Object? avatarUrl = null,
-    Object? language = null,
-    Object? description = null,
-    Object? stargazersCount = null,
+    Object? totalCount = freezed,
+    Object? items = null,
   }) {
     return _then(_value.copyWith(
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      avatarUrl: null == avatarUrl
-          ? _value.avatarUrl
-          : avatarUrl // ignore: cast_nullable_to_non_nullable
-              as String,
-      language: null == language
-          ? _value.language
-          : language // ignore: cast_nullable_to_non_nullable
-              as String,
-      description: null == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
-              as String,
-      stargazersCount: null == stargazersCount
-          ? _value.stargazersCount
-          : stargazersCount // ignore: cast_nullable_to_non_nullable
-              as int,
+      totalCount: freezed == totalCount
+          ? _value.totalCount
+          : totalCount // ignore: cast_nullable_to_non_nullable
+              as int?,
+      items: null == items
+          ? _value.items
+          : items // ignore: cast_nullable_to_non_nullable
+              as List<RepositoryItem>,
     ) as $Val);
   }
 }
@@ -104,12 +81,7 @@ abstract class _$$SearchRepositoryImplCopyWith<$Res>
       __$$SearchRepositoryImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {String name,
-      String avatarUrl,
-      String language,
-      String description,
-      int stargazersCount});
+  $Res call({int? totalCount, List<RepositoryItem> items});
 }
 
 /// @nodoc
@@ -125,33 +97,18 @@ class __$$SearchRepositoryImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? name = null,
-    Object? avatarUrl = null,
-    Object? language = null,
-    Object? description = null,
-    Object? stargazersCount = null,
+    Object? totalCount = freezed,
+    Object? items = null,
   }) {
     return _then(_$SearchRepositoryImpl(
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      avatarUrl: null == avatarUrl
-          ? _value.avatarUrl
-          : avatarUrl // ignore: cast_nullable_to_non_nullable
-              as String,
-      language: null == language
-          ? _value.language
-          : language // ignore: cast_nullable_to_non_nullable
-              as String,
-      description: null == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
-              as String,
-      stargazersCount: null == stargazersCount
-          ? _value.stargazersCount
-          : stargazersCount // ignore: cast_nullable_to_non_nullable
-              as int,
+      totalCount: freezed == totalCount
+          ? _value.totalCount
+          : totalCount // ignore: cast_nullable_to_non_nullable
+              as int?,
+      items: null == items
+          ? _value._items
+          : items // ignore: cast_nullable_to_non_nullable
+              as List<RepositoryItem>,
     ));
   }
 }
@@ -160,29 +117,25 @@ class __$$SearchRepositoryImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$SearchRepositoryImpl implements _SearchRepository {
   const _$SearchRepositoryImpl(
-      {required this.name,
-      required this.avatarUrl,
-      required this.language,
-      required this.description,
-      required this.stargazersCount});
+      {required this.totalCount, required final List<RepositoryItem> items})
+      : _items = items;
 
   factory _$SearchRepositoryImpl.fromJson(Map<String, dynamic> json) =>
       _$$SearchRepositoryImplFromJson(json);
 
   @override
-  final String name;
+  final int? totalCount;
+  final List<RepositoryItem> _items;
   @override
-  final String avatarUrl;
-  @override
-  final String language;
-  @override
-  final String description;
-  @override
-  final int stargazersCount;
+  List<RepositoryItem> get items {
+    if (_items is EqualUnmodifiableListView) return _items;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_items);
+  }
 
   @override
   String toString() {
-    return 'SearchRepository(name: $name, avatarUrl: $avatarUrl, language: $language, description: $description, stargazersCount: $stargazersCount)';
+    return 'SearchRepository(totalCount: $totalCount, items: $items)';
   }
 
   @override
@@ -190,21 +143,15 @@ class _$SearchRepositoryImpl implements _SearchRepository {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$SearchRepositoryImpl &&
-            (identical(other.name, name) || other.name == name) &&
-            (identical(other.avatarUrl, avatarUrl) ||
-                other.avatarUrl == avatarUrl) &&
-            (identical(other.language, language) ||
-                other.language == language) &&
-            (identical(other.description, description) ||
-                other.description == description) &&
-            (identical(other.stargazersCount, stargazersCount) ||
-                other.stargazersCount == stargazersCount));
+            (identical(other.totalCount, totalCount) ||
+                other.totalCount == totalCount) &&
+            const DeepCollectionEquality().equals(other._items, _items));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
-      runtimeType, name, avatarUrl, language, description, stargazersCount);
+      runtimeType, totalCount, const DeepCollectionEquality().hash(_items));
 
   /// Create a copy of SearchRepository
   /// with the given fields replaced by the non-null parameter values.
@@ -225,25 +172,16 @@ class _$SearchRepositoryImpl implements _SearchRepository {
 
 abstract class _SearchRepository implements SearchRepository {
   const factory _SearchRepository(
-      {required final String name,
-      required final String avatarUrl,
-      required final String language,
-      required final String description,
-      required final int stargazersCount}) = _$SearchRepositoryImpl;
+      {required final int? totalCount,
+      required final List<RepositoryItem> items}) = _$SearchRepositoryImpl;
 
   factory _SearchRepository.fromJson(Map<String, dynamic> json) =
       _$SearchRepositoryImpl.fromJson;
 
   @override
-  String get name;
+  int? get totalCount;
   @override
-  String get avatarUrl;
-  @override
-  String get language;
-  @override
-  String get description;
-  @override
-  int get stargazersCount;
+  List<RepositoryItem> get items;
 
   /// Create a copy of SearchRepository
   /// with the given fields replaced by the non-null parameter values.

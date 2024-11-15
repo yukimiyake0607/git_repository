@@ -1,0 +1,8 @@
+# build.yaml
+targets:
+  $default:
+    builders:
+      json_serializable:
+        options:
+          # デフォルトで以下の設定が有効
+          field_rename: snake

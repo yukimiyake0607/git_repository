@@ -9,19 +9,15 @@ part of 'search_repository.dart';
 _$SearchRepositoryImpl _$$SearchRepositoryImplFromJson(
         Map<String, dynamic> json) =>
     _$SearchRepositoryImpl(
-      name: json['name'] as String,
-      avatarUrl: json['avatarUrl'] as String,
-      language: json['language'] as String,
-      description: json['description'] as String,
-      stargazersCount: (json['stargazersCount'] as num).toInt(),
+      totalCount: (json['total_count'] as num?)?.toInt(),
+      items: (json['items'] as List<dynamic>)
+          .map((e) => RepositoryItem.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$$SearchRepositoryImplToJson(
         _$SearchRepositoryImpl instance) =>
     <String, dynamic>{
-      'name': instance.name,
-      'avatarUrl': instance.avatarUrl,
-      'language': instance.language,
-      'description': instance.description,
-      'stargazersCount': instance.stargazersCount,
+      'total_count': instance.totalCount,
+      'items': instance.items,
     };

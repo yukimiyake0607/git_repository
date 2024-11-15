@@ -1,45 +1,60 @@
 import 'package:flutter/material.dart';
+import 'package:git_repository/core/result/result.dart';
+import 'package:git_repository/data/search_repository_list/search_repository_list.dart';
+import 'package:git_repository/models/repository_exception/repository_exception.dart';
 import 'package:git_repository/models/searchRepository/search_repository.dart';
+import 'package:git_repository/ui/widgets/result_empty.dart';
 import 'package:git_repository/ui/widgets/textfield_search.dart';
-import 'package:git_repository/util/util.dart';
+import 'package:git_repository/core/util/util.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class SearchScreen extends StatelessWidget {
-  SearchScreen({super.key});
+class SearchScreen extends ConsumerWidget {
+  const SearchScreen({super.key});
 
-  static const _titleTextstyle = TextStyle(fontSize: 30);
-
-  final List<SearchRepository> searchRepositories = [
-    SearchRepository(
-        name: 'flutter',
-        avatarUrl:
-            'https://secure.gravatar.com/avatar/e7956084e75f239de85d3a31bc172ace?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-user-420.png',
-        language: 'Dart',
-        description: 'とりあえずのクラスです。ここはリポジトリ説明欄です。とりあえずのクラスです。ここはリポジトリ説明欄です。',
-        stargazersCount: 10),
-    SearchRepository(
-        name: 'flutter',
-        avatarUrl:
-            'https://secure.gravatar.com/avatar/e7956084e75f239de85d3a31bc172ace?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-user-420.png',
-        language: 'Dart',
-        description: 'とりあえずのクラス',
-        stargazersCount: 10),
-    SearchRepository(
-        name: 'flutter',
-        avatarUrl:
-            'https://secure.gravatar.com/avatar/e7956084e75f239de85d3a31bc172ace?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-user-420.png',
-        language: 'Dart',
-        description: 'とりあえずのクラス',
-        stargazersCount: 10),
-  ];
+  void _showDialog(BuildContext context) {
+    showDialog<void>(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('エラー'),
+          content: const Text('予期せぬエラーが発生しました'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                context.pop();
+              },
+              child: Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    // プロバイダを監視
+    final searchRepositoryAsync = ref.watch(searchRepositoryListProvider);
+
+    // プロバイダを購読
+    // stateでAsyncErrorが発生した場合に処理が実行
+    ref.listen<AsyncValue<Result<SearchRepository, RepositoryException>>>(
+      searchRepositoryListProvider,
+      (_, current) {
+        current.whenOrNull(
+          error: (error, stackTrace) {
+            _showDialog(context);
+          },
+        );
+      },
+    );
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
           'GitHub',
-          style: _titleTextstyle,
+          style: titleTextstyle,
         ),
       ),
       body: Padding(
@@ -47,55 +62,94 @@ class SearchScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            TextfieldSearch(),
-            Divider(color: dividerColor),
-            Text('Total ******'),
+            Row(
+              children: [
+                Expanded(child: TextfieldSearch()),
+              ],
+            ),
             Expanded(
-              child: ListView.builder(
-                itemCount: 3,
-                itemBuilder: (BuildContext context, int index) {
-                  final repo = searchRepositories[index];
-                  return Column(
-                    children: [
-                      ListTile(
-                        leading: CircleAvatar(
-                          backgroundImage: NetworkImage(repo.avatarUrl),
-                        ),
-                        title: Text(
-                          repo.name,
-                          style: repositoryTitleTextStyle,
-                        ),
-                        subtitle: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(repo.description),
-                            SizedBox(height: 5),
-                            Row(
+              child: searchRepositoryAsync.when(
+                data: (result) {
+                  return result.when(
+                    success: (searchRepository) {
+                      return CustomScrollView(
+                        slivers: [
+                          SliverToBoxAdapter(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
-                                Icon(
-                                  Icons.language,
-                                  color: Colors.blue,
-                                ),
-                                Text(repo.language),
-                                SizedBox(width: 10),
-                                Icon(
-                                  Icons.stars_rounded,
-                                  color: Colors.lightGreen,
-                                ),
-                                Text(repo.stargazersCount.toString()),
+                                Divider(color: dividerColor),
+                                Text('${searchRepository.totalCount}件'),
                               ],
                             ),
-                          ],
-                        ),
-                        trailing: Icon(Icons.chevron_right),
-                        onTap: () {
-                          context.push('/detail');
-                        },
-                      ),
-                      Divider(color: dividerColor),
-                    ],
+                          ),
+                          searchRepository.items.isEmpty
+                              ? SliverFillRemaining(child: ResultEmptyScreen())
+                              : SliverList(
+                                  delegate: SliverChildBuilderDelegate(
+                                    (context, index) {
+                                      final repo =
+                                          searchRepository.items[index];
+                                      return Column(
+                                        children: [
+                                          ListTile(
+                                            leading: CircleAvatar(
+                                              backgroundImage: NetworkImage(
+                                                repo.owner!.avatarUrl ??
+                                                    'https://github.com/identicons/default.png',
+                                              ),
+                                            ),
+                                            title: Text(
+                                              repo.name!,
+                                              style: repositoryTitleTextStyle,
+                                            ),
+                                            subtitle: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(repo.description ?? ''),
+                                                const SizedBox(height: 5),
+                                                Row(
+                                                  children: [
+                                                    const Icon(
+                                                      Icons.language,
+                                                      color: Colors.blue,
+                                                    ),
+                                                    Text(repo.language ?? '-'),
+                                                    const SizedBox(width: 10),
+                                                    const Icon(
+                                                      Icons.stars_rounded,
+                                                      color: Colors.lightGreen,
+                                                    ),
+                                                    Text(repo.stargazersCount
+                                                        .toString()),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                            trailing:
+                                                const Icon(Icons.chevron_right),
+                                            onTap: () {
+                                              context.push('/detail');
+                                            },
+                                          ),
+                                          Divider(color: dividerColor),
+                                        ],
+                                      );
+                                    },
+                                    childCount: searchRepository.items.length,
+                                  ),
+                                ),
+                        ],
+                      );
+                    },
+                    exception: (repositoryException) {
+                      return Text(repositoryException.message);
+                    },
                   );
                 },
+                error: (_, __) => Center(child: Text('検索結果はありません')),
+                loading: () => Center(child: CircularProgressIndicator()),
               ),
             ),
           ],

@@ -10,24 +10,24 @@ _$DetailRepositoryImpl _$$DetailRepositoryImplFromJson(
         Map<String, dynamic> json) =>
     _$DetailRepositoryImpl(
       name: json['name'] as String,
-      avatarUrl: json['avatarUrl'] as String,
+      avatarUrl: json['avatar_url'] as String,
       description: json['description'] as String,
       language: json['language'] as String,
-      stargazersCount: (json['stargazersCount'] as num).toInt(),
-      watchersCount: (json['watchersCount'] as num).toInt(),
-      forksCount: (json['forksCount'] as num).toInt(),
-      openIssuesCount: (json['openIssuesCount'] as num).toInt(),
+      stargazersCount: (json['stargazers_count'] as num).toInt(),
+      watchersCount: (json['watchers_count'] as num).toInt(),
+      forksCount: (json['forks_count'] as num).toInt(),
+      openIssuesCount: (json['open_issues_count'] as num).toInt(),
     );
 
 Map<String, dynamic> _$$DetailRepositoryImplToJson(
         _$DetailRepositoryImpl instance) =>
     <String, dynamic>{
       'name': instance.name,
-      'avatarUrl': instance.avatarUrl,
+      'avatar_url': instance.avatarUrl,
       'description': instance.description,
       'language': instance.language,
-      'stargazersCount': instance.stargazersCount,
-      'watchersCount': instance.watchersCount,
-      'forksCount': instance.forksCount,
-      'openIssuesCount': instance.openIssuesCount,
+      'stargazers_count': instance.stargazersCount,
+      'watchers_count': instance.watchersCount,
+      'forks_count': instance.forksCount,
+      'open_issues_count': instance.openIssuesCount,
     };

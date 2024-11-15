@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:git_repository/presentation/router.dart';
+import 'package:git_repository/app/router.dart';
 
 class MainApp extends StatelessWidget {
   const MainApp({super.key});
