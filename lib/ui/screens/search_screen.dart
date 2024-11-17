@@ -144,7 +144,7 @@ class SearchScreen extends ConsumerWidget {
                       );
                     },
                     exception: (repositoryException) {
-                      return Text(repositoryException.message);
+                      return Center(child: Text(repositoryException.message));
                     },
                   );
                 },
