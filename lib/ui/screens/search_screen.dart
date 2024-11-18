@@ -82,7 +82,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
                 barrierDismissible: false,
                 builder: (context) {
                   return Center(
-                    child: CircularProgressIndicator(),
+                    child: CircularProgressIndicator(color: Colors.blue),
                   );
                 },
               );
