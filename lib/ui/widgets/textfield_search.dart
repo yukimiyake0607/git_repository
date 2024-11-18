@@ -43,9 +43,10 @@ class _TextfieldSearchState extends ConsumerState<TextfieldSearch> {
 
         // 300ミリ秒後に検索を実行
         _debounceTimer = Timer(const Duration(milliseconds: 300), () {
-          ref
-              .read(searchRepositoryListProvider.notifier)
-              .fetchRepository(value.trim(), 1);
+          ref.read(searchRepositoryListProvider.notifier).fetchRepository(
+                value.trim(),
+                isRefresh: true,
+              );
         });
       },
       decoration: InputDecoration(
