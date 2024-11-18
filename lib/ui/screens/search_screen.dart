@@ -4,13 +4,42 @@ import 'package:git_repository/data/search_repository_list/search_repository_lis
 import 'package:git_repository/models/repository_exception/repository_exception.dart';
 import 'package:git_repository/models/searchRepository/search_repository.dart';
 import 'package:git_repository/ui/widgets/result_empty.dart';
+import 'package:git_repository/ui/widgets/result_success_screen.dart';
 import 'package:git_repository/ui/widgets/textfield_search.dart';
 import 'package:git_repository/core/util/util.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class SearchScreen extends ConsumerWidget {
+class SearchScreen extends ConsumerStatefulWidget {
   const SearchScreen({super.key});
+
+  @override
+  ConsumerState<SearchScreen> createState() => _SearchScreenState();
+}
+
+class _SearchScreenState extends ConsumerState<SearchScreen> {
+  final ScrollController _scrollController = ScrollController();
+  bool isLoading = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(_onScroll);
+  }
+
+  @override
+  void dispose() {
+    _scrollController.removeListener(_onScroll);
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void _onScroll() {
+    if (_scrollController.position.pixels >=
+        _scrollController.position.maxScrollExtent - 20) {
+      ref.read(searchRepositoryListProvider.notifier).loadMore();
+    }
+  }
 
   void _showDialog(BuildContext context) {
     showDialog<void>(
@@ -33,8 +62,7 @@ class SearchScreen extends ConsumerWidget {
   }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    // プロバイダを監視
+  Widget build(BuildContext context) {
     final searchRepositoryAsync = ref.watch(searchRepositoryListProvider);
 
     // プロバイダを購読
@@ -45,6 +73,26 @@ class SearchScreen extends ConsumerWidget {
         current.whenOrNull(
           error: (error, stackTrace) {
             _showDialog(context);
+          },
+          loading: () {
+            if (!isLoading) {
+              isLoading = true;
+              showDialog<void>(
+                context: context,
+                barrierDismissible: false,
+                builder: (context) {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                },
+              );
+            }
+          },
+          data: (_) {
+            if (isLoading == true) {
+              context.pop();
+              isLoading = false;
+            }
           },
         );
       },
@@ -69,88 +117,38 @@ class SearchScreen extends ConsumerWidget {
             ),
             Expanded(
               child: searchRepositoryAsync.when(
-                data: (result) {
-                  return result.when(
-                    success: (searchRepository) {
-                      return CustomScrollView(
-                        slivers: [
-                          SliverToBoxAdapter(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                Divider(color: dividerColor),
-                                Text('${searchRepository.totalCount}件'),
-                              ],
-                            ),
-                          ),
-                          searchRepository.items.isEmpty
-                              ? SliverFillRemaining(child: ResultEmptyScreen())
-                              : SliverList(
-                                  delegate: SliverChildBuilderDelegate(
-                                    (context, index) {
-                                      final repo =
-                                          searchRepository.items[index];
-                                      return Column(
-                                        children: [
-                                          ListTile(
-                                            leading: CircleAvatar(
-                                              backgroundImage: NetworkImage(
-                                                repo.owner!.avatarUrl ??
-                                                    'https://github.com/identicons/default.png',
-                                              ),
-                                            ),
-                                            title: Text(
-                                              repo.name!,
-                                              style: repositoryTitleTextStyle,
-                                            ),
-                                            subtitle: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(repo.description ?? ''),
-                                                const SizedBox(height: 5),
-                                                Row(
-                                                  children: [
-                                                    const Icon(
-                                                      Icons.language,
-                                                      color: Colors.blue,
-                                                    ),
-                                                    Text(repo.language ?? '-'),
-                                                    const SizedBox(width: 10),
-                                                    const Icon(
-                                                      Icons.stars_rounded,
-                                                      color: Colors.lightGreen,
-                                                    ),
-                                                    Text(repo.stargazersCount
-                                                        .toString()),
-                                                  ],
-                                                ),
-                                              ],
-                                            ),
-                                            trailing:
-                                                const Icon(Icons.chevron_right),
-                                            onTap: () {
-                                              context.push('/detail');
-                                            },
-                                          ),
-                                          Divider(color: dividerColor),
-                                        ],
-                                      );
-                                    },
-                                    childCount: searchRepository.items.length,
-                                  ),
-                                ),
-                        ],
-                      );
-                    },
-                    exception: (repositoryException) {
-                      return Center(child: Text(repositoryException.message));
-                    },
-                  );
-                },
-                error: (_, __) => Center(child: Text('検索結果はありません')),
-                loading: () => Center(child: CircularProgressIndicator()),
-              ),
+                  data: (result) {
+                    return result.when(
+                      success: (searchRepository) {
+                        return ResultSuccessScreen(
+                          searchRepository,
+                          _scrollController,
+                        );
+                      },
+                      exception: (repositoryException) {
+                        return Center(child: Text(repositoryException.message));
+                      },
+                    );
+                  },
+                  error: (_, __) => Center(child: Text('検索結果はありません')),
+                  loading: () {
+                    final previousData = searchRepositoryAsync.valueOrNull;
+                    if (previousData == null) {
+                      return ResultEmptyScreen();
+                    }
+
+                    return previousData.when(
+                      success: (searchRepository) {
+                        return ResultSuccessScreen(
+                          searchRepository,
+                          _scrollController,
+                        );
+                      },
+                      exception: (repositoryException) {
+                        return Center(child: Text(repositoryException.message));
+                      },
+                    );
+                  }),
             ),
           ],
         ),
