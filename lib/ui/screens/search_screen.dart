@@ -125,38 +125,39 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
             ),
             Expanded(
               child: searchRepositoryAsync.when(
-                  data: (result) {
-                    return result.when(
-                      success: (searchRepository) {
-                        return ResultSuccessScreen(
-                          searchRepository,
-                          _scrollController,
-                        );
-                      },
-                      exception: (repositoryException) {
-                        return Center(child: Text(repositoryException.message));
-                      },
-                    );
-                  },
-                  error: (_, __) => Center(child: Text('検索結果はありません')),
-                  loading: () {
-                    final previousData = searchRepositoryAsync.valueOrNull;
-                    if (previousData == null) {
-                      return ResultEmptyScreen();
-                    }
+                data: (result) {
+                  return result.when(
+                    success: (searchRepository) {
+                      return ResultSuccessScreen(
+                        searchRepository,
+                        _scrollController,
+                      );
+                    },
+                    exception: (repositoryException) {
+                      return Center(child: Text(repositoryException.message));
+                    },
+                  );
+                },
+                error: (_, __) => Center(child: Text('検索結果はありません')),
+                loading: () {
+                  final previousData = searchRepositoryAsync.valueOrNull;
+                  if (previousData == null) {
+                    return ResultEmptyScreen();
+                  }
 
-                    return previousData.when(
-                      success: (searchRepository) {
-                        return ResultSuccessScreen(
-                          searchRepository,
-                          _scrollController,
-                        );
-                      },
-                      exception: (repositoryException) {
-                        return Center(child: Text(repositoryException.message));
-                      },
-                    );
-                  }),
+                  return previousData.when(
+                    success: (searchRepository) {
+                      return ResultSuccessScreen(
+                        searchRepository,
+                        _scrollController,
+                      );
+                    },
+                    exception: (repositoryException) {
+                      return Center(child: Text(repositoryException.message));
+                    },
+                  );
+                },
+              ),
             ),
           ],
         ),
