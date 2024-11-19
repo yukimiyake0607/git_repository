@@ -45,7 +45,7 @@ class _TextfieldSearchState extends ConsumerState<TextfieldSearch> {
         _debounceTimer = Timer(const Duration(milliseconds: 700), () {
           ref.read(searchRepositoryListProvider.notifier).fetchRepository(
                 value.trim(),
-                isRefresh: true,
+                isInitializing: true,
               );
         });
       },

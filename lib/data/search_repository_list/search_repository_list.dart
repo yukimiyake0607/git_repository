@@ -19,9 +19,10 @@ class SearchRepositoryList extends _$SearchRepositoryList {
     return Result.success(SearchRepository(totalCount: 0, items: []));
   }
 
-  Future<void> fetchRepository(String keyword, {bool isRefresh = false}) async {
+  Future<void> fetchRepository(String keyword,
+      {bool isInitializing = false}) async {
     try {
-      if (isRefresh) {
+      if (isInitializing) {
         _currentPage = 1;
         _allItems = [];
         _hasPage = true;
