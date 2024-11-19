@@ -20,6 +20,7 @@ class SearchScreen extends ConsumerStatefulWidget {
 class _SearchScreenState extends ConsumerState<SearchScreen> {
   final ScrollController _scrollController = ScrollController();
   bool isLoading = false;
+  bool isFetching = false;
 
   @override
   void initState() {
@@ -34,10 +35,18 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
     super.dispose();
   }
 
-  void _onScroll() {
+  Future<void> _onScroll() async {
+    if (isFetching) return;
+
     if (_scrollController.position.pixels >=
         _scrollController.position.maxScrollExtent - 20) {
-      ref.read(searchRepositoryListProvider.notifier).loadMore();
+      isFetching = true;
+
+      try {
+        await ref.read(searchRepositoryListProvider.notifier).loadMore();
+      } finally {
+        isFetching = false;
+      }
     }
   }
 
@@ -66,7 +75,6 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
     final searchRepositoryAsync = ref.watch(searchRepositoryListProvider);
 
     // プロバイダを購読
-    // stateでAsyncErrorが発生した場合に処理が実行
     ref.listen<AsyncValue<Result<SearchRepository, RepositoryException>>>(
       searchRepositoryListProvider,
       (_, current) {
