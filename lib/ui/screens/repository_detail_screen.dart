@@ -1,23 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:git_repository/models/detailRepository/detail_repository.dart';
+import 'package:git_repository/models/repository_item/repository_item.dart';
 import 'package:git_repository/ui/widgets/detail_repository_item.dart';
 import 'package:git_repository/core/util/util.dart';
 import 'package:go_router/go_router.dart';
 
 class RepositoryDetailScreen extends StatelessWidget {
-  RepositoryDetailScreen({super.key});
+  const RepositoryDetailScreen(this._repositoryItem, {super.key});
 
-  final detailRepo = DetailRepository(
-    name: 'flutter',
-    avatarUrl:
-        'https://secure.gravatar.com/avatar/e7956084e75f239de85d3a31bc172ace?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-user-420.png',
-    description: '仮の説明欄です。Riverpod導入後削除します。',
-    language: 'Dart',
-    stargazersCount: 1,
-    watchersCount: 3,
-    forksCount: 0,
-    openIssuesCount: 1,
-  );
+  final RepositoryItem _repositoryItem;
 
   @override
   Widget build(BuildContext context) {
@@ -41,19 +31,19 @@ class RepositoryDetailScreen extends StatelessWidget {
               children: [
                 CircleAvatar(
                   radius: 24,
-                  backgroundImage: NetworkImage(detailRepo.avatarUrl),
+                  backgroundImage: NetworkImage(_repositoryItem.owner?.avatarUrl ?? 'https://github.com/identicons/default.png'),
                 ),
                 SizedBox(
                   width: 10,
                 ),
                 Text(
-                  detailRepo.name,
+                  _repositoryItem.name ?? '--',
                   style: repositoryTitleTextStyle,
                 ),
               ],
             ),
             SizedBox(height: 10),
-            Text(detailRepo.description),
+            Text(_repositoryItem.description ?? ''),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8),
               child: Divider(color: dividerColor),
@@ -62,35 +52,35 @@ class RepositoryDetailScreen extends StatelessWidget {
               avatarColor: Colors.blue,
               avatarIcon: Icons.language,
               itemName: '言語',
-              itemDetail: detailRepo.language,
+              itemDetail: _repositoryItem.language ?? '--',
             ),
             SizedBox(height: 10),
             DetailRepositoryItem(
               avatarColor: Colors.lightGreen,
               avatarIcon: Icons.star,
               itemName: 'star',
-              itemDetail: detailRepo.stargazersCount.toString(),
+              itemDetail: _repositoryItem.stargazersCount.toString(),
             ),
             SizedBox(height: 10),
             DetailRepositoryItem(
               avatarColor: Colors.orangeAccent,
               avatarIcon: Icons.remove_red_eye,
               itemName: 'watch',
-              itemDetail: detailRepo.watchersCount.toString(),
+              itemDetail: _repositoryItem.watchersCount.toString(),
             ),
             SizedBox(height: 10),
             DetailRepositoryItem(
               avatarColor: Colors.deepPurple,
               avatarIcon: Icons.fork_right,
               itemName: 'fork',
-              itemDetail: detailRepo.forksCount.toString(),
+              itemDetail: _repositoryItem.forksCount.toString(),
             ),
             SizedBox(height: 10),
             DetailRepositoryItem(
               avatarColor: Colors.green,
               avatarIcon: Icons.info_outline,
               itemName: 'issue',
-              itemDetail: detailRepo.openIssuesCount.toString(),
+              itemDetail: _repositoryItem.openIssuesCount.toString(),
             ),
           ],
         ),
@@ -98,5 +88,3 @@ class RepositoryDetailScreen extends StatelessWidget {
     );
   }
 }
-
-

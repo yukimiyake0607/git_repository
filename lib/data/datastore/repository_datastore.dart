@@ -1,3 +1,4 @@
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -12,6 +13,7 @@ RepositoryDatastore repositoryDatastore(Ref ref) {
 
 class RepositoryDatastore {
   RepositoryDatastore(this._client);
+
   final http.Client _client;
   final String _baseUrl = 'https://api.github.com/';
   final String _searchUrl = 'search/repositories';
@@ -20,9 +22,23 @@ class RepositoryDatastore {
     required String keyword,
     required int page,
   }) async {
-    String uri = '$_baseUrl$_searchUrl?q=$keyword&page=$page';
-    final url = Uri.parse(uri);
-    final response = await _client.get(url);
+    final queryParams = {
+      'q': keyword,
+      'page': page.toString(),
+      'per_page': '30',
+    };
+    final uri =
+        Uri.parse(_baseUrl + _searchUrl).replace(queryParameters: queryParams);
+    final response = await _client.get(
+      uri,
+      headers: {
+        'Accept': 'application/vnd.github.v3+json',
+        'Authorization': 'Bearer ${dotenv.env['GITHUB_TOKEN']}',
+        // レスポンスヘッダーでRate Limitを確認するため
+        'X-GitHub-Api-Version': '2022-11-28',
+      },
+    );
+
     return response;
   }
 }
