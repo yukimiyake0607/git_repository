@@ -71,7 +71,10 @@ class ResultSuccessScreen extends ConsumerWidget {
                           ),
                           trailing: const Icon(Icons.chevron_right),
                           onTap: () {
-                            context.push('/detail');
+                            context.push(
+                              '/detail',
+                              extra: repo,
+                            );
                           },
                         ),
                         Divider(color: dividerColor),
