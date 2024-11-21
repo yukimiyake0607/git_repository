@@ -1,5 +1,5 @@
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:git_repository/token.dart';
 import 'package:http/http.dart' as http;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -33,7 +33,7 @@ class RepositoryDatastore {
       uri,
       headers: {
         'Accept': 'application/vnd.github.v3+json',
-        'Authorization': 'Bearer $token',
+        'Authorization': 'Bearer ${dotenv.env['GITHUB_TOKEN']}',
         // レスポンスヘッダーでRate Limitを確認するため
         'X-GitHub-Api-Version': '2022-11-28',
       },
