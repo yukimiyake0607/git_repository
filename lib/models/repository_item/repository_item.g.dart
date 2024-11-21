@@ -15,6 +15,9 @@ _$RepositoryItemImpl _$$RepositoryItemImplFromJson(Map<String, dynamic> json) =>
       language: json['language'] as String?,
       description: json['description'] as String?,
       stargazersCount: (json['stargazers_count'] as num?)?.toInt(),
+      watchersCount: (json['watchers_count'] as num?)?.toInt(),
+      forksCount: (json['forks_count'] as num?)?.toInt(),
+      openIssuesCount: (json['open_issues_count'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$$RepositoryItemImplToJson(
@@ -25,6 +28,9 @@ Map<String, dynamic> _$$RepositoryItemImplToJson(
       'language': instance.language,
       'description': instance.description,
       'stargazers_count': instance.stargazersCount,
+      'watchers_count': instance.watchersCount,
+      'forks_count': instance.forksCount,
+      'open_issues_count': instance.openIssuesCount,
     };
 
 _$OwnerImpl _$$OwnerImplFromJson(Map<String, dynamic> json) => _$OwnerImpl(

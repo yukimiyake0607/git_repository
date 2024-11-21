@@ -11,6 +11,9 @@ class RepositoryItem with _$RepositoryItem {
     required String? language,
     required String? description,
     required int? stargazersCount,
+    required int? watchersCount,
+    required int? forksCount,
+    required int? openIssuesCount,
   }) = _RepositoryItem;
   
   factory RepositoryItem.fromJson(Map<String, dynamic> json) => _$RepositoryItemFromJson(json);

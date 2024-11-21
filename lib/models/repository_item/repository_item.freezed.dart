@@ -25,6 +25,9 @@ mixin _$RepositoryItem {
   String? get language => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
   int? get stargazersCount => throw _privateConstructorUsedError;
+  int? get watchersCount => throw _privateConstructorUsedError;
+  int? get forksCount => throw _privateConstructorUsedError;
+  int? get openIssuesCount => throw _privateConstructorUsedError;
 
   /// Serializes this RepositoryItem to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -47,7 +50,10 @@ abstract class $RepositoryItemCopyWith<$Res> {
       Owner? owner,
       String? language,
       String? description,
-      int? stargazersCount});
+      int? stargazersCount,
+      int? watchersCount,
+      int? forksCount,
+      int? openIssuesCount});
 
   $OwnerCopyWith<$Res>? get owner;
 }
@@ -72,6 +78,9 @@ class _$RepositoryItemCopyWithImpl<$Res, $Val extends RepositoryItem>
     Object? language = freezed,
     Object? description = freezed,
     Object? stargazersCount = freezed,
+    Object? watchersCount = freezed,
+    Object? forksCount = freezed,
+    Object? openIssuesCount = freezed,
   }) {
     return _then(_value.copyWith(
       name: freezed == name
@@ -93,6 +102,18 @@ class _$RepositoryItemCopyWithImpl<$Res, $Val extends RepositoryItem>
       stargazersCount: freezed == stargazersCount
           ? _value.stargazersCount
           : stargazersCount // ignore: cast_nullable_to_non_nullable
+              as int?,
+      watchersCount: freezed == watchersCount
+          ? _value.watchersCount
+          : watchersCount // ignore: cast_nullable_to_non_nullable
+              as int?,
+      forksCount: freezed == forksCount
+          ? _value.forksCount
+          : forksCount // ignore: cast_nullable_to_non_nullable
+              as int?,
+      openIssuesCount: freezed == openIssuesCount
+          ? _value.openIssuesCount
+          : openIssuesCount // ignore: cast_nullable_to_non_nullable
               as int?,
     ) as $Val);
   }
@@ -125,7 +146,10 @@ abstract class _$$RepositoryItemImplCopyWith<$Res>
       Owner? owner,
       String? language,
       String? description,
-      int? stargazersCount});
+      int? stargazersCount,
+      int? watchersCount,
+      int? forksCount,
+      int? openIssuesCount});
 
   @override
   $OwnerCopyWith<$Res>? get owner;
@@ -149,6 +173,9 @@ class __$$RepositoryItemImplCopyWithImpl<$Res>
     Object? language = freezed,
     Object? description = freezed,
     Object? stargazersCount = freezed,
+    Object? watchersCount = freezed,
+    Object? forksCount = freezed,
+    Object? openIssuesCount = freezed,
   }) {
     return _then(_$RepositoryItemImpl(
       name: freezed == name
@@ -171,6 +198,18 @@ class __$$RepositoryItemImplCopyWithImpl<$Res>
           ? _value.stargazersCount
           : stargazersCount // ignore: cast_nullable_to_non_nullable
               as int?,
+      watchersCount: freezed == watchersCount
+          ? _value.watchersCount
+          : watchersCount // ignore: cast_nullable_to_non_nullable
+              as int?,
+      forksCount: freezed == forksCount
+          ? _value.forksCount
+          : forksCount // ignore: cast_nullable_to_non_nullable
+              as int?,
+      openIssuesCount: freezed == openIssuesCount
+          ? _value.openIssuesCount
+          : openIssuesCount // ignore: cast_nullable_to_non_nullable
+              as int?,
     ));
   }
 }
@@ -183,7 +222,10 @@ class _$RepositoryItemImpl implements _RepositoryItem {
       required this.owner,
       required this.language,
       required this.description,
-      required this.stargazersCount});
+      required this.stargazersCount,
+      required this.watchersCount,
+      required this.forksCount,
+      required this.openIssuesCount});
 
   factory _$RepositoryItemImpl.fromJson(Map<String, dynamic> json) =>
       _$$RepositoryItemImplFromJson(json);
@@ -198,10 +240,16 @@ class _$RepositoryItemImpl implements _RepositoryItem {
   final String? description;
   @override
   final int? stargazersCount;
+  @override
+  final int? watchersCount;
+  @override
+  final int? forksCount;
+  @override
+  final int? openIssuesCount;
 
   @override
   String toString() {
-    return 'RepositoryItem(name: $name, owner: $owner, language: $language, description: $description, stargazersCount: $stargazersCount)';
+    return 'RepositoryItem(name: $name, owner: $owner, language: $language, description: $description, stargazersCount: $stargazersCount, watchersCount: $watchersCount, forksCount: $forksCount, openIssuesCount: $openIssuesCount)';
   }
 
   @override
@@ -216,13 +264,19 @@ class _$RepositoryItemImpl implements _RepositoryItem {
             (identical(other.description, description) ||
                 other.description == description) &&
             (identical(other.stargazersCount, stargazersCount) ||
-                other.stargazersCount == stargazersCount));
+                other.stargazersCount == stargazersCount) &&
+            (identical(other.watchersCount, watchersCount) ||
+                other.watchersCount == watchersCount) &&
+            (identical(other.forksCount, forksCount) ||
+                other.forksCount == forksCount) &&
+            (identical(other.openIssuesCount, openIssuesCount) ||
+                other.openIssuesCount == openIssuesCount));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, name, owner, language, description, stargazersCount);
+  int get hashCode => Object.hash(runtimeType, name, owner, language,
+      description, stargazersCount, watchersCount, forksCount, openIssuesCount);
 
   /// Create a copy of RepositoryItem
   /// with the given fields replaced by the non-null parameter values.
@@ -247,7 +301,10 @@ abstract class _RepositoryItem implements RepositoryItem {
       required final Owner? owner,
       required final String? language,
       required final String? description,
-      required final int? stargazersCount}) = _$RepositoryItemImpl;
+      required final int? stargazersCount,
+      required final int? watchersCount,
+      required final int? forksCount,
+      required final int? openIssuesCount}) = _$RepositoryItemImpl;
 
   factory _RepositoryItem.fromJson(Map<String, dynamic> json) =
       _$RepositoryItemImpl.fromJson;
@@ -262,6 +319,12 @@ abstract class _RepositoryItem implements RepositoryItem {
   String? get description;
   @override
   int? get stargazersCount;
+  @override
+  int? get watchersCount;
+  @override
+  int? get forksCount;
+  @override
+  int? get openIssuesCount;
 
   /// Create a copy of RepositoryItem
   /// with the given fields replaced by the non-null parameter values.
