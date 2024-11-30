@@ -8,7 +8,7 @@ import 'package:git_repository/models/repository_exception/repository_exception.
 import 'package:mockito/mockito.dart';
 import 'package:http/http.dart' as http;
 
-import '../mock/http_client/client_mock.mocks.dart';
+import '../../mock/http_client/client_mock.mocks.dart';
 
 void main() {
   late MockClient mockHttpClient;

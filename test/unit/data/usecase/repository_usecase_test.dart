@@ -6,7 +6,7 @@ import 'package:git_repository/data/usecase/repository_usecase.dart';
 import 'package:mockito/mockito.dart';
 import 'package:http/http.dart' as http;
 
-import '../mock/datastore/datastore_mock.mocks.dart';
+import '../../mock/datastore/datastore_mock.mocks.dart';
 
 void main() {
   late RepositoryDatastore mockRepositoryDatastore;
