@@ -7,7 +7,7 @@ part of 'search_repository_list.dart';
 // **************************************************************************
 
 String _$searchRepositoryListHash() =>
-    r'30fa187a377e3951ab20025011da074a989caec2';
+    r'92c9d525b9070c7f0d09af1d62d7a57315b69c5e';
 
 /// See also [SearchRepositoryList].
 @ProviderFor(SearchRepositoryList)
