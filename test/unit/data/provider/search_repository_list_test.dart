@@ -243,4 +243,82 @@ void main() {
     // Assert
     expect(notifier.allItems, equals([]));
   });
+
+  group('loadMoreのテストグループ', () {
+    final notifier = container.read(searchRepositoryListProvider.notifier);
+    List<RepositoryItem> repositoryItemList = List.generate(30, (i) {
+      return RepositoryItem(
+        name: 'repo$i',
+        owner: null,
+        language: 'Dart',
+        description: '',
+        stargazersCount: 10,
+        watchersCount: 10,
+        forksCount: 10,
+        openIssuesCount: 10,
+      );
+    });
+    test('loadMore: _hasPageがtrueのとき新しいデータを取得する', () async {
+      // Arrange
+      List<RepositoryItem> repositoryItemListMore = List.generate(30, (i) {
+        return RepositoryItem(
+          name: 'repo${i + 30}',
+          owner: null,
+          language: 'Dart',
+          description: '',
+          stargazersCount: 10,
+          watchersCount: 10,
+          forksCount: 10,
+          openIssuesCount: 10,
+        );
+      });
+
+      // fetchRepositoryの出力設定
+      when(mockRepositoryUsecase.fetchRepository('flutter', 1))
+          .thenAnswer((_) async => Result.success(SearchRepository(
+                totalCount: 100,
+                items: repositoryItemList,
+              )));
+      // loadMoreの出力値
+      when(mockRepositoryUsecase.fetchRepository('flutter', 2))
+          .thenAnswer((_) async => Result.success(SearchRepository(
+                totalCount: 100,
+                items: repositoryItemListMore,
+              )));
+
+      // fetchRepositoryの実行: totalCountの方が多いため_hasPageはtrueになるはず
+      await notifier.fetchRepository('flutter', isInitializing: true);
+
+      verify(mockRepositoryUsecase.fetchRepository('flutter', 1)).called(1);
+      expect(notifier.allItems, equals(repositoryItemList));
+      expect(notifier.hasPage, isTrue);
+
+      // Act: loadMoreを実行
+      await notifier.loadMore();
+
+      // Assert
+      verify(mockRepositoryUsecase.fetchRepository('flutter', 2)).called(1);
+      expect(notifier.allItems.length, equals(60));
+    });
+
+    test('_hasPageがfalseのとき新しいデータを取得しない', () async {
+      // Arrange
+      when(mockRepositoryUsecase.fetchRepository('flutter', 1)).thenAnswer(
+          (_) async => Result.success(
+              SearchRepository(totalCount: 30, items: repositoryItemList)));
+
+      await notifier.fetchRepository('flutter');
+
+      // fetchRepositoryの実行および確認: hasPageはfalseになっているはず
+      verify(mockRepositoryUsecase.fetchRepository('flutter', 1)).called(1);
+      expect(notifier.allItems.length, equals(30));
+      expect(notifier.hasPage, isFalse);
+
+      //Act
+      await notifier.loadMore();
+
+      // Assert
+      verifyNever(mockRepositoryUsecase.fetchRepository('flutter', 2));
+    });
+  });
 }
