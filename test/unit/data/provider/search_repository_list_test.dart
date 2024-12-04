@@ -204,4 +204,43 @@ void main() {
       expect(notifier.currentPage, equals(3));
     });
   });
+
+  test('clearRepository: 状態が初期化される', () async {
+    // Arrange
+    final notifier = container.read(searchRepositoryListProvider.notifier);
+    List<RepositoryItem> repositoryItemList = List.generate(30, (i) {
+      return RepositoryItem(
+        name: 'repo$i',
+        owner: null,
+        language: 'Dart',
+        description: '',
+        stargazersCount: 10,
+        watchersCount: 10,
+        forksCount: 10,
+        openIssuesCount: 10,
+      );
+    });
+
+    when(mockRepositoryUsecase.fetchRepository('flutter', 1)).thenAnswer(
+      (_) async => Result.success(
+        SearchRepository(
+          totalCount: 30,
+          items: repositoryItemList,
+        ),
+      ),
+    );
+
+    // fetchRepositoryを実行
+    await notifier.fetchRepository('flutter', isInitializing: true);
+
+    // プロバイダの値はrepositoryItemListになっているはず
+    verify(mockRepositoryUsecase.fetchRepository('flutter', 1)).called(1);
+    expect(notifier.allItems, equals(repositoryItemList));
+
+    // Act
+    await notifier.clearRepository();
+
+    // Assert
+    expect(notifier.allItems, equals([]));
+  });
 }

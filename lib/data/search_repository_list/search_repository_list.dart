@@ -15,8 +15,10 @@ class SearchRepositoryList extends _$SearchRepositoryList {
   String _currentKeyword = '';
 
   // getter
-  bool get hasPage => _hasPage;
   int get currentPage => _currentPage;
+  List<RepositoryItem> get allItems => _allItems;
+  bool get hasPage => _hasPage;
+  String get currentKeyword => _currentKeyword;
 
   @override
   FutureOr<Result<SearchRepository, RepositoryException>> build() {
