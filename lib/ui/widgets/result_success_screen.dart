@@ -38,10 +38,14 @@ class ResultSuccessScreen extends ConsumerWidget {
                       children: [
                         ListTile(
                           leading: CircleAvatar(
-                            backgroundImage: NetworkImage(
-                              repo.owner!.avatarUrl ??
-                                  'https://github.com/identicons/default.png',
-                            ),
+                            backgroundImage:
+                                repo.owner?.avatarUrl?.isEmpty == false
+                                    ? NetworkImage(repo.owner!.avatarUrl!)
+                                    : null, // テスト用に空の場合はnullを使用
+                            backgroundColor: Colors.grey, // 背景色を設定
+                            child: repo.owner?.avatarUrl?.isEmpty == true
+                                ? const Icon(Icons.person) // 画像がない場合のフォールバック
+                                : null,
                           ),
                           title: Text(
                             repo.name!,
