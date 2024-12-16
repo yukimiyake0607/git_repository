@@ -31,7 +31,13 @@ class RepositoryDetailScreen extends StatelessWidget {
               children: [
                 CircleAvatar(
                   radius: 24,
-                  backgroundImage: NetworkImage(_repositoryItem.owner?.avatarUrl ?? 'https://github.com/identicons/default.png'),
+                  backgroundColor: Colors.grey,
+                  backgroundImage: _repositoryItem.owner?.avatarUrl != null
+                      ? NetworkImage(_repositoryItem.owner!.avatarUrl!)
+                      : null,
+                  child: _repositoryItem.owner?.avatarUrl == null
+                      ? const Icon(Icons.person)
+                      : null,
                 ),
                 SizedBox(
                   width: 10,
