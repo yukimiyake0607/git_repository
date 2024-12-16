@@ -280,6 +280,13 @@ void main() {
   });
 
   testWidgets('画面遷移の詳細なテスト', (tester) async {
+    // テスト環境のサイズを設定
+    tester.view.physicalSize = Size(1080, 1920);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(() {
+      tester.view.reset();
+    });
+
     // Arrange
     final mockRepositories = [
       createTestRepository(name: 'repo-1', watchersCount: 9, avatarUrl: null),
@@ -330,6 +337,13 @@ void main() {
   });
 
   testWidgets('スクロールした際に追加データが読み込まれるか', (tester) async {
+    // テスト環境のサイズを設定
+    tester.view.physicalSize = Size(1080, 1920);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(() {
+      tester.view.reset();
+    });
+
     // Arrange
     final firstRepositories = List.generate(30, (i) {
       return createTestRepository(
