@@ -289,12 +289,19 @@ void main() {
 
     // Arrange
     final mockRepositories = [
-      createTestRepository(name: 'repo-1', watchersCount: 9, avatarUrl: null),
-      createTestRepository(name: 'repo-2', avatarUrl: null),
+      createTestRepository(
+        name: 'repo-1',
+        description: 'Test description',
+        watchersCount: 9,
+        avatarUrl: null,
+      ),
+      createTestRepository(
+        name: 'repo-2',
+        avatarUrl: null,
+      ),
     ];
 
-    when(mockRepositoryUsecase.fetchRepository('flutter', 1))
-        .thenAnswer((_) async {
+    when(mockRepositoryUsecase.fetchRepository(any, 1)).thenAnswer((_) async {
       return Result.success(SearchRepository(
         totalCount: mockRepositories.length,
         items: mockRepositories,
@@ -311,35 +318,39 @@ void main() {
         ),
       ),
     );
+    await tester.pumpAndSettle();
 
+    // データの読み込み
     final container =
         ProviderScope.containerOf(tester.element(find.byType(SearchScreen)));
-
-    await container
-        .read(searchRepositoryListProvider.notifier)
-        .fetchRepository('flutter');
-    await tester.pumpAndSettle(); // fetchRepositoryの完了を待つ
-
-    // ListTileが存在することを確認
-    final listTileFinder = find.byType(ListTile);
-    expect(listTileFinder, findsWidgets);
-
-    // 特定のListTileを見つけて確実に表示されていることを確認
-    final targetListTile = find.descendant(
-      of: listTileFinder.first,
-      matching: find.text('repo-1'),
-    );
-    await tester.ensureVisible(targetListTile);
+    final notifier = container.read(searchRepositoryListProvider.notifier);
+    await notifier.fetchRepository('flutter', isInitializing: true);
     await tester.pumpAndSettle();
 
-    // Act
-    await tester.tap(listTileFinder.first);
-    await tester.pumpAndSettle();
+    // 初期状態の確認
+    expect(notifier.allItems.length, equals(2));
+    expect(find.byType(ListTile), findsWidgets);
 
-    // Assert
+    // リポジトリの詳細を表示
+    final firstListTile = find.byType(ListTile).first;
+    expect(firstListTile, findsOneWidget);
+
+    // タップ前の状態を確認
+    await tester.ensureVisible(firstListTile);
+    await tester.pumpAndSettle();
     expect(find.text('repo-1'), findsOneWidget);
-    expect(find.text('Dart'), findsOneWidget);
-    expect(find.text('Test description'), findsOneWidget);
+
+    // 画面遷移
+    await tester.tap(firstListTile);
+    await tester.pumpAndSettle();
+
+    // 詳細画面の表示を確認
+    expect(find.text('リポジトリ詳細'), findsOneWidget,
+        reason: 'リポジトリ詳細画面のタイトルが表示されていません');
+    expect(find.text('repo-1'), findsOneWidget, reason: 'リポジトリ名が表示されていません');
+    expect(find.text('Dart'), findsOneWidget, reason: '言語情報が表示されていません');
+    expect(find.text('Test description'), findsOneWidget,
+        reason: '説明が表示されていません');
     expect(find.text('10'), findsOneWidget);
     expect(find.text('9'), findsOneWidget);
     expect(find.text('3'), findsOneWidget);
