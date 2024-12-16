@@ -29,7 +29,8 @@ jobs:
         run: flutter analyze
 
       - name: Run tests
-        run: flutter test --machine > test_report.log
+        run: |
+          flutter test --machine --platform-name="CI Test" --coverage > test_report.log
         continue-on-error: true
 
       - name: Report test results
