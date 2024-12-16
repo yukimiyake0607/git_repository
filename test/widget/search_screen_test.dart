@@ -318,12 +318,22 @@ void main() {
     await container
         .read(searchRepositoryListProvider.notifier)
         .fetchRepository('flutter');
+    await tester.pumpAndSettle(); // fetchRepositoryの完了を待つ
 
-    await tester.pump();
-    expect(find.byType(ListTile), findsWidgets);
+    // ListTileが存在することを確認
+    final listTileFinder = find.byType(ListTile);
+    expect(listTileFinder, findsWidgets);
+
+    // 特定のListTileを見つけて確実に表示されていることを確認
+    final targetListTile = find.descendant(
+      of: listTileFinder.first,
+      matching: find.text('repo-1'),
+    );
+    await tester.ensureVisible(targetListTile);
+    await tester.pumpAndSettle();
 
     // Act
-    await tester.tap(find.byType(ListTile).first);
+    await tester.tap(listTileFinder.first);
     await tester.pumpAndSettle();
 
     // Assert
