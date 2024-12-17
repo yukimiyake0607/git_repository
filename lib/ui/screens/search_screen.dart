@@ -38,8 +38,10 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
   Future<void> _onScroll() async {
     if (isFetching) return;
 
-    if (_scrollController.position.pixels >=
-        _scrollController.position.maxScrollExtent - 20) {
+    final position = _scrollController.position.pixels;
+    final maxExtent = _scrollController.position.maxScrollExtent;
+
+    if (position >= maxExtent - 20) {
       isFetching = true;
 
       try {
