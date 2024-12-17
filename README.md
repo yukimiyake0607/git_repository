@@ -49,7 +49,7 @@ fvm flutter pub get
 ```
 
 ## フォルダ構成
-<pre?>
+<pre>
 lib
 ├── app
 │   ├── app.dart
