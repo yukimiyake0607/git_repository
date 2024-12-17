@@ -20,7 +20,6 @@
 </p>
 
 ## 環境構築
-## 環境構築
 ### リポジトリをクローン
 ```bash
 git clone https://github.com/yukimiyake0607/git_repository.git
