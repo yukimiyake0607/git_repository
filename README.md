@@ -15,9 +15,7 @@
 |:---:|:---:|
 | <img src="assets/repo-empty.PNG" width="230"> | <img src="assets/repo-error.PNG" width="230"> |
 
-<p align="center">
-  <img src="assets/repo.mp4" width="230">
-</p>
+https://github.com/user-attachments/assets/bf89d53c-f788-4d13-8b5e-b4cae4c99968
 
 ## 環境構築
 ## 環境構築
@@ -94,7 +92,7 @@ lib
         └── textfield_search.dart
 </pre>
 
-###フォルダ分割の方針
+### フォルダ分割の方針
 基本的に関心事ごとにファイルを分割しています。例えば、実際に目に触れるものはすべてUIフォルダに保管しています。ファイル名は関心事.dartとします。
 
 ## 環境
