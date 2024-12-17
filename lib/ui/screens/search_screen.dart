@@ -82,6 +82,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
       (_, current) {
         current.whenOrNull(
           error: (error, stackTrace) {
+            context.pop();
             _showDialog(context);
           },
           loading: () {
